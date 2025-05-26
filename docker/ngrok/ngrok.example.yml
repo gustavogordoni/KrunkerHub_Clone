@@ -1,0 +1,7 @@
+version: "2"
+authtoken: # seu token
+tunnels:
+  web:
+    proto: http
+    addr: nginx:80
+    domain: # seu domínio

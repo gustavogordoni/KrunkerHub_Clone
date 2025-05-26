@@ -1,0 +1,115 @@
+services:
+    # image project
+    app:
+        container_name: app
+        build:
+            context: .
+            dockerfile: Dockerfile
+        restart: unless-stopped
+        working_dir: /var/www/
+        volumes:
+            - ./:/var/www
+        depends_on:
+            - redis
+            - db
+        networks:
+            - laravel
+
+    # nginx
+    nginx:
+        container_name: nginx
+        image: nginx:alpine
+        restart: unless-stopped
+        ports:
+            - "1000:80"
+        volumes:
+            - ./:/var/www
+            - ./docker/nginx/:/etc/nginx/conf.d/
+        networks:
+            - laravel
+
+    # db mysql
+    # db:
+    #     container_name: mysql
+    #     image: mysql:8.0
+    #     platform: linux/x86_64
+    #     restart: unless-stopped
+    #     environment:
+    #         MYSQL_DATABASE: ${DB_DATABASE:-laravel}
+    #         MYSQL_ROOT_PASSWORD: ${DB_PASSWORD:-root}
+    #         MYSQL_PASSWORD: ${DB_PASSWORD:-userpass}
+    #         MYSQL_USER: ${DB_USERNAME:-username}
+    #     volumes:
+    #         - ./.docker/mysql/dbdata:/var/lib/mysql
+    #     ports:
+    #         - "3300:3306"
+    #     networks:
+    #         - laravel
+
+    # db postgres
+    db:
+        container_name: postgres
+        image: postgres:17
+        restart: unless-stopped
+        environment:
+            POSTGRES_DB: ${DB_DATABASE:-laravel}
+            POSTGRES_USER: ${DB_USERNAME:-username}
+            POSTGRES_PASSWORD: ${DB_PASSWORD:-userpass}
+        volumes:
+            - ./.docker/postgres/dbdata:/var/lib/postgresql/data
+        ports:
+            - "5433:5432"
+        networks:
+            - laravel
+
+    # PHPMyAdmin
+    # phpmyadmin:c
+    #     container_name: phpmyadmin
+    #     image: phpmyadmin/phpmyadmin
+    #     platform: linux/x86_64
+    #     restart: unless-stopped
+    #     ports:
+    #         - "8080:80"
+    #     environment:
+    #         PMA_HOST: db
+    #         PMA_PORT: 3306
+    #         MYSQL_ROOT_PASSWORD: ${DB_PASSWORD:-root}
+    #     networks:
+    #         - laravel
+
+    # mailhog
+    # mailhog:
+    #     container_name: mailhog
+    #     image: mailhog/mailhog:latest
+    #     restart: always
+    #     ports:
+    #         - 1025:1025
+    #         - 8025:8025
+    #     networks:
+    #         - laravel
+
+    # ngrok
+    # ngrok:
+    #     container_name: ngrok
+    #     image: ngrok/ngrok:latest
+    #     restart: unless-stopped
+    #     command: ["start", "--config", "/etc/ngrok.yml", "--all"]
+    #     ports:
+    #         - 4040:4040
+    #     volumes:
+    #     - ./docker/ngrok/ngrok.yml:/etc/ngrok.yml:ro
+    #     depends_on:
+    #     - nginx
+    #     networks:
+    #     - laravel    
+
+    # redis
+    redis:
+        container_name: redis
+        image: redis:latest
+        networks:
+            - laravel
+
+networks:
+    laravel:
+        driver: bridge
