@@ -54,4 +54,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Sale::class);
     }
+
+    public function items()
+    {
+        return $this->belongsToMany(Item::class)->withTimestamps();
+    }
 }

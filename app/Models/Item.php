@@ -24,4 +24,9 @@ class Item extends Model
     {
         return $this->hasMany(Sale::class);
     }
+
+    public function owners()
+{
+    return $this->belongsToMany(User::class)->withTimestamps();
+}
 }

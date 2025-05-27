@@ -1,0 +1,64 @@
+.colCub {
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+    display: inline-block;
+    vertical-align: bottom;
+}
+
+.rainbowBG {
+    -webkit-animation: rainbowBG 0.5s linear infinite;
+    /*! animation: rainbowBG 0.5s linear infinite; */
+}
+.rainbowText {
+    -webkit-animation: rainbowText 0.5s linear infinite;
+    /*! animation: rainbowBG 0.5s linear infinite; */
+}
+
+@keyframes rainbowBG {
+
+    0%,
+    100% {
+        background-color: Crimson;
+    }
+
+    20% {
+        background-color: orange;
+    }
+
+    40% {
+        background-color: yellow;
+    }
+
+    60% {
+        background-color: lime;
+    }
+
+    80% {
+        background-color: MediumBlue;
+    }
+}
+
+@keyframes rainbowText {
+
+    0%,
+    100% {
+        color: Crimson;
+    }
+
+    20% {
+        color: orange;
+    }
+
+    40% {
+        color: yellow;
+    }
+
+    60% {
+        color: lime;
+    }
+
+    80% {
+        color: MediumBlue;
+    }
+}

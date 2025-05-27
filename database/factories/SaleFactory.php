@@ -19,8 +19,8 @@ class SaleFactory extends Factory
     public function definition(): array
     {
         return [
-            'user_id' => User::factory(),
-            'item_id' => Item::factory(),
+            'user_id' => User::inRandomOrder()->first()->id,
+            'item_id' => Item::inRandomOrder()->first()->id,
             'price' => fake()->numberBetween(1000, 200000),
             'status' => fake()->randomElement(['on_sale', 'sold']),
         ];
