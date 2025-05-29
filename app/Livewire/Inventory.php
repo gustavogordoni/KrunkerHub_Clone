@@ -23,6 +23,8 @@ class Inventory extends Component
 
     public function render()
     {
-        return view('livewire.inventory');
+        $itemsTotal = Item::count();
+
+        return view('livewire.inventory', ['itemsTotal' => $itemsTotal]);
     }
 }

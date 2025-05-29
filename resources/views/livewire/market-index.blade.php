@@ -3,7 +3,6 @@
     <h1 class="text-2xl font-bold mb-4 flex justify-between items-center">
         Market
         <button wire:click="$toggle('showFilterModal')" class="bg-blue-600 text-white px-4 py-2 rounded">Search</button>
-
     </h1>
 
     @if ($showFilterModal)
@@ -112,7 +111,7 @@
             </form>
         </div>
     @endif
-    <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-6">
+    <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-3 mt-6">
         @foreach ($sales as $sale)
             @php
                 $classColor = match ($sale->item->rarity) {
@@ -136,7 +135,7 @@
                     default => '',
                 };
             @endphp
-            <div class="bg-gray-100 dark:bg-gray-800 rounded shadow p-4 border-2 {{ $borderColor }}">
+            <div class="bg-gray-100 dark:bg-gray-800 rounded shadow p-2 border-4 {{ $borderColor }}">
                 <h2 class="text-xl text-center {{ $classColor }}"><strong>{{ $sale->item->name }}</strong></h2>
                 <h3 class="text text-gray-600 text-center dark:text-gray-300">{{ $sale->item->category }}</h3>
                 <img src="https://assets.krunker.io/textures/previews/weapons/weapon_2_6.png"
@@ -144,6 +143,13 @@
                 <p class="text-gray-600 dark:text-gray-300 text-center">
                     <strong class="text-lg">{{ number_format($sale->price) }} KR</strong>
                 </p>
+                {{-- <div class="block w-full text-center">
+                    <a href="" class="bg-blue-500 p-1 m-1 rounded">Purchase</a>
+                    <a href="" class="bg-blue-500 p-1 m-1 rounded">Search</a>
+                    <a href="" class="bg-blue-500 p-1 m-1 rounded">Share</a>
+                    <a href="" class="bg-blue-500 p-1 m-1 rounded">Info</a>
+                    <a href="" class="bg-blue-500 p-1 m-1 rounded">Info</a>
+                </div> --}}
             </div>
         @endforeach
     </div>

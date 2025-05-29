@@ -1,6 +1,7 @@
 <div class="p-6 bg-white text-black dark:bg-gray-900 dark:text-white min-h-screen">
     <h1 class="text-2xl font-bold mb-4">Inventory</h1>
-    <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
+    <p>Items: {{ count($items) }} / {{ $itemsTotal }}</p>
+    <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-3">
         @foreach ($items as $item)
             @php
                 $classColor = match ($item->rarity) {
@@ -24,7 +25,7 @@
                     default => '',
                 };
             @endphp
-            <div class="bg-gray-100 dark:bg-gray-800 rounded shadow p-4 border-2 {{ $borderColor }}">
+            <div class="bg-gray-100 dark:bg-gray-800 rounded shadow p-2 border-4 {{ $borderColor }}">
                 <h2 class="text-xl text-center {{ $classColor }}"><strong>{{ $item->name }}</strong></h2>
                 <h3 class="text text-gray-600 text-center dark:text-gray-300">{{ $item->category }}</h3>
                 <img src="https://assets.krunker.io/textures/previews/weapons/weapon_2_6.png"

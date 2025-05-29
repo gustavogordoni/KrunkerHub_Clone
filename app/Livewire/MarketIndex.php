@@ -12,14 +12,8 @@ class MarketIndex extends Component
     public $categories = [];
     public $seasons = [];
     public $authors = [];
-
-    public $filterPriceMin = null;
-    public $filterPriceMax = null;
+    
     public $search = '';
-
-    public $availableCategories = [];
-    public $availableSeasons = [];
-    public $availableAuthors = [];
 
     public $showFilterModal = false;
 
@@ -53,8 +47,8 @@ class MarketIndex extends Component
         ],
         'Contraband' => [
             'bg' => 'bg-black',
-            'text' => 'text-black dark:text-white',
-            'border' => 'border-black dark:border-white',
+            'text' => 'text-black',
+            'border' => 'border-black',
         ],
         'Unobtainable' => [
             'bg' => 'rainbowBG',
@@ -65,9 +59,7 @@ class MarketIndex extends Component
 
     public function mount()
     {
-        $this->availableCategories = Item::distinct('category')->pluck('category')->filter()->values();
-        $this->availableSeasons = Item::distinct('season')->pluck('season')->filter()->sort()->values();
-        $this->availableAuthors = Item::distinct('author')->pluck('author')->filter()->values();
+        
     }
 
     public function getSalesProperty()
@@ -76,42 +68,23 @@ class MarketIndex extends Component
             ->where('status', 'on_sale')
             ->when(
                 count($this->rarities),
-                fn($query) =>
-                $query->whereHas('item', fn($q) => $q->whereIn('rarity', $this->rarities))
+                fn($query) => $query->whereHas('item', fn($q) => $q->whereIn('rarity', $this->rarities))
             )
             ->when(
                 count($this->categories),
-                fn($query) =>
-                $query->whereHas('item', fn($q) => $q->whereIn('category', $this->categories))
+                fn($query) => $query->whereHas('item', fn($q) => $q->whereIn('category', $this->categories))
             )
             ->when(
                 count($this->seasons),
-                fn($query) =>
-                $query->whereHas('item', fn($q) => $q->whereIn('season', $this->seasons))
+                fn($query) => $query->whereHas('item', fn($q) => $q->whereIn('season', $this->seasons))
             )
             ->when(
                 count($this->authors),
-                fn($query) =>
-                $query->whereHas('item', fn($q) => $q->whereIn('author', $this->authors))
-            )
-            ->when(
-                $this->filterPriceMin,
-                fn($query) =>
-                $query->where('price', '>=', $this->filterPriceMin)
-            )
-            ->when(
-                $this->filterPriceMax,
-                fn($query) =>
-                $query->where('price', '<=', $this->filterPriceMax)
+                fn($query) => $query->whereHas('item', fn($q) => $q->whereIn('author', $this->authors))
             )
             ->when(
                 $this->search,
-                fn($query) =>
-                $query->whereHas(
-                    'item',
-                    fn($q) =>
-                    $q->where('name', 'like', '%' . $this->search . '%')
-                )
+                fn($query) => $query->whereHas('item', fn($q) => $q->where('name', 'like', '%' . $this->search . '%')                )
             )
             ->get();
     }
@@ -122,8 +95,6 @@ class MarketIndex extends Component
         $this->categories = [];
         $this->seasons = [];
         $this->authors = [];
-        $this->filterPriceMin = null;
-        $this->filterPriceMax = null;
         $this->search = '';
     }
 
