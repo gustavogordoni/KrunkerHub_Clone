@@ -14,6 +14,10 @@
     -webkit-animation: rainbowText 0.5s linear infinite;
     /*! animation: rainbowBG 0.5s linear infinite; */
 }
+.rainbowBorder {
+    -webkit-animation: rainbowBorder 0.5s linear infinite;
+    /*! animation: rainbowBG 0.5s linear infinite; */
+}
 
 @keyframes rainbowBG {
 
@@ -39,7 +43,7 @@
     }
 }
 
-@keyframes rainbowText {
+@keyframes rainbowText {    
 
     0%,
     100% {
@@ -60,5 +64,28 @@
 
     80% {
         color: MediumBlue;
+    }
+}
+@keyframes rainbowBorder {
+
+    0%,
+    100% {
+        border-color: Crimson;
+    }
+
+    20% {
+        border-color: orange;
+    }
+
+    40% {
+        border-color: yellow;
+    }
+
+    60% {
+        border-color: lime;
+    }
+
+    80% {
+        border-color: MediumBlue;
     }
 }
