@@ -32,8 +32,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/market', LivewireMarketIndex::class)->name('market');
     Route::get('/inventory', LivewireInventory::class)->name('inventory');
     Route::get('/my-sales', LivewireMySales::class)->name('my-sales');
-    Route::get('/item-serch', LivewireItemSearch::class)->name('item-serch');
-
 });
 
 require __DIR__.'/auth.php';

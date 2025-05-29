@@ -31,18 +31,7 @@
                     <x-nav-link :href="route('my-sales')" :active="request()->routeIs('my-sales')">
                         {{ __('My Sales') }}
                     </x-nav-link>
-                </div>
-                {{-- <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('item-serch')" :active="request()->routeIs('item-serch')">
-                        {{ __('Item Serch') }}
-                    </x-nav-link>
-                </div> --}}
-
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link @click="$dispatch('open-item-search-modal')">
-                        {{ __('Search') }}
-                    </x-nav-link>
-                </div>
+                </div>                
             </div>
 
             <!-- Settings Dropdown -->
@@ -120,14 +109,6 @@
 
             <x-responsive-nav-link :href="route('my-sales')" :active="request()->routeIs('my-sales')">
                 {{ __('My Sales') }}
-            </x-responsive-nav-link>
-
-            {{-- <x-responsive-nav-link :href="route('item-serch')" :active="request()->routeIs('item-serch')">
-                {{ __('Item Serch') }}
-            </x-responsive-nav-link> --}}
-
-            <x-responsive-nav-link @click="$dispatch('open-item-search-modal')">
-                {{ __('Item Serch') }}
             </x-responsive-nav-link>
 
         </div>
