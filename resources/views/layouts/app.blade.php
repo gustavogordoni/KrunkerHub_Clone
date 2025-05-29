@@ -32,6 +32,10 @@
             <main>
                 {{ $slot }}
             </main>
+
+            <x-item-search-modal>
+                @livewire('item-search')
+            </x-item-search-modal>
         </div>
     </body>
 </html>
