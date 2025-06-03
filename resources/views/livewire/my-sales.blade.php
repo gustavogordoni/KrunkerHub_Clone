@@ -2,7 +2,7 @@
     <h1 class="text-2xl font-bold mb-4">My Sales</h1>
     <p>Items on sale: {{ count($sales) }}</p>
     <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-3">
-        @foreach ($sales as $sale)
+        @forelse ($sales as $sale)
             @php
                 $item = $sale->item;
                 $classColor = match ($item->rarity) {
@@ -38,6 +38,11 @@
                     <a href="{{ route('item.show', $item->id) }}" class="p-1 m-1 rounded">Info</a>
                 </div>
             </div>
-        @endforeach
+        @empty
+            <div class="col-span-full bg-gray-800 text-white p-6 rounded text-center">
+                <h3 class="text-lg font-semibold">Nenhum item à venda.</h3>
+                <p class="text-sm text-gray-400 mt-1">Os itens do seu inventário colocados à venda aparecerão aqui.</p>
+            </div>
+        @endforelse
     </div>
 </div>

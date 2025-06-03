@@ -2,7 +2,7 @@
     <h1 class="text-2xl font-bold mb-4">Inventory</h1>
     <p>Items: {{ count($items) }} / {{ $itemsTotal }}</p>
     <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-3">
-        @foreach ($items as $item)
+        @forelse ($items as $item)
             @php
                 $classColor = match ($item->rarity) {
                     'Uncommon' => 'text-green-500',
@@ -37,6 +37,11 @@
                     <a href="{{ route('item.show', $item->id) }}" class="p-1 m-1 rounded">Info</a>
                 </div>
             </div>
-        @endforeach
+        @empty
+            <div class="col-span-full bg-gray-800 text-white p-6 rounded text-center">
+                <h3 class="text-lg font-semibold">Você não possui itens em seu inventário.</h3>
+                <p class="text-sm text-gray-400 mt-1">Adquira itens no mercado para que apareçam aqui.</p>
+            </div>
+        @endforelse
     </div>
 </div>
