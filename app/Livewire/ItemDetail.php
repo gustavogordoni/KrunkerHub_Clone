@@ -10,48 +10,32 @@ use Livewire\Component;
 class ItemDetail extends Component
 {
     public $item;
-    public $range = '1 month';
 
     public $averagePrice;
     public $unitsSold;
     public $owners;
-    public $chartData = [];
+    public $minPrice;
+    public $maxPrice;
+    public $author;
 
     public function mount($id)
     {
         $this->item = Item::findOrFail($id);
-        $this->loadStats();
-    }
-    
-    public function loadStats()
-    {
-        $rangeDate = match ($this->range) {
-            '1 week' => now()->subWeek(1),
-            '2 week' => now()->subWeek(2),
-            '3 week' => now()->subWeek(3),
-            '1 months' => now()->subMonths(1),
-            '2 months' => now()->subMonths(2),
-            '3 months' => now()->subMonths(3),
-            '4 months' => now()->subMonths(4),
-            default    => now()->subMonth(),
-        };
 
-        $sales = Sale::where('item_id', $this->item->id)
-            ->where('status', 'sold')
-            ->where('created_at', '>=', $rangeDate)
-            ->get();
+        $this->author = User::find($this->item->author);
 
-        $this->averagePrice = $sales->avg('price') ?? 0;
-        $this->unitsSold = $sales->count();
+        $salesQuery = Sale::where('item_id', $this->item->id)
+            ->where('status', 'sold');
+
+        $this->averagePrice = $salesQuery->avg('price') ?? 0;
+        $this->minPrice = $salesQuery->min('price') ?? 0;
+        $this->maxPrice = $salesQuery->max('price') ?? 0;
+        $this->unitsSold = $salesQuery->count();
         $this->owners = Sale::where('item_id', $this->item->id)->distinct('user_id')->count('user_id');
     }
 
     public function render()
     {
-        $author = User::find($this->item->author);
-
-        return view('livewire.item-detail', [
-            'author' => $author,
-        ]);
+        return view('livewire.item-detail');
     }
 }

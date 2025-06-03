@@ -26,31 +26,35 @@
 
         <div class="w-full md:w-1/4 bg-gray-800 rounded p-4 text-center border-4 {{ $borderColor }} my-auto">
             <img src="https://assets.krunker.io/textures/previews/weapons/weapon_2_6.png" alt="{{ $item->name }}"
-                {{-- class="w-full h-48 object-contain mb-2"> --}}
                 class="w-40 h-40 mx-auto">
         </div>
+
         <div class="w-full md:w-3/4 space-y-4">
             <div class="bg-gray-800 p-4 rounded">
                 <h1 class="text-3xl font-bold mt-2 {{ $classColor }}">{{ $item->name }}</h1>
-                <a href="{{ null }}">by <strong>{{ $author->name }}</strong></a>
+                @if ($author)
+                    <p>by <a href="#" class="text-sm text-blue-400">{{ $author->name }}</a></p>
+                @endif
                 <p class="text-sm">{{ ucfirst($item->category) }}</p>
                 <p class="text-sm">Season {{ $item->season }}</p>
-
                 <p class="text-xs italic">{{ $item->rarity }} - {{ $item->tag }}</p>
-                <p class="text-xs mt-2">{{ $item->price }} KR base</p>
-                
-                <div class="mt-4 grid grid-cols-3 gap-4 text-center text-sm">
+
+                <div class="mt-4 grid grid-cols-2 md:grid-cols-4 gap-4 text-center text-sm">
                     <div>
-                        <p class="font-bold text-green-500">{{ $averagePrice }} KR</p>
+                        <p class="font-bold text-green-500">{{ number_format($averagePrice) }} KR</p>
                         <p class="text-gray-400">Avg Price</p>
                     </div>
                     <div>
-                        <p class="font-bold text-blue-500">{{ $unitsSold }}</p>
-                        <p class="text-gray-400">On Sale</p>
+                        <p class="font-bold text-yellow-400">{{ number_format($minPrice) }} KR</p>
+                        <p class="text-gray-400">Min Price</p>
                     </div>
                     <div>
-                        <p class="font-bold text-yellow-400">{{ $owners }}</p>
-                        <p class="text-gray-400">In Circulation</p>
+                        <p class="font-bold text-red-400">{{ number_format($maxPrice) }} KR</p>
+                        <p class="text-gray-400">Max Price</p>
+                    </div>
+                    <div>
+                        <p class="font-bold text-blue-500">{{ $owners }}</p>
+                        <p class="text-gray-400">Owners</p>
                     </div>
                 </div>
             </div>
