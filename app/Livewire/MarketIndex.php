@@ -5,14 +5,20 @@ namespace App\Livewire;
 use App\Models\Item;
 use App\Models\Sale;
 use Livewire\Component;
+use Livewire\WithPagination;
+
+use function Laravel\Prompts\search;
 
 class MarketIndex extends Component
 {
+    use WithPagination;
+
     public $rarities = [];
     public $categories = [];
-    public $seasons = [];
+    public $season = 0;
     public $authors = [];
-    
+    public $sortField = '';
+
     public $search = '';
 
     public $showFilterModal = false;
@@ -57,14 +63,14 @@ class MarketIndex extends Component
         ],
     ];
 
-    public function mount()
+    public function search()
     {
-        
+        $this->showFilterModal = false;
     }
 
     public function getSalesProperty()
     {
-        return Sale::with('item')
+        $query = Sale::with('item')
             ->where('status', 'on_sale')
             ->when(
                 count($this->rarities),
@@ -75,27 +81,36 @@ class MarketIndex extends Component
                 fn($query) => $query->whereHas('item', fn($q) => $q->whereIn('category', $this->categories))
             )
             ->when(
-                count($this->seasons),
-                fn($query) => $query->whereHas('item', fn($q) => $q->whereIn('season', $this->seasons))
-            )
-            ->when(
-                count($this->authors),
-                fn($query) => $query->whereHas('item', fn($q) => $q->whereIn('author', $this->authors))
+                $this->season,
+                fn($query) => $query->whereHas('item', fn($q) => $q->where('season', $this->season))
             )
             ->when(
                 $this->search,
-                fn($query) => $query->whereHas('item', fn($q) => $q->where('name', 'like', '%' . $this->search . '%')                )
-            )
-            ->get();
+                fn($query) => $query->whereHas('item', fn($q) => $q->where('name', 'like', '%' . $this->search . '%'))
+            );
+
+        if ($this->sortField == 'low') {
+            $query->orderBy('price', 'asc');
+        } elseif ($this->sortField == 'high') {
+            $query->orderBy('price', 'desc');
+        }
+
+        return $query->paginate(30);
     }
 
     public function resetFilters()
     {
         $this->rarities = [];
         $this->categories = [];
-        $this->seasons = [];
-        $this->authors = [];
+        $this->season = 0;
         $this->search = '';
+        $this->sortField = '';
+        $this->activeTab = 'rarities';
+    }
+
+    public function toggleFilters()
+    {
+        $this->{$this->activeTab} = [];
     }
 
     public function tabs($tab)
