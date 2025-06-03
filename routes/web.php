@@ -7,6 +7,7 @@ use App\Livewire\MarketIndex;
 use App\Livewire\Inventory;
 use App\Livewire\MySales;
 use App\Livewire\ItemDetail;
+use App\Livewire\Profile;
 
 Route::get('/', function () {
     return view('welcome');
@@ -24,7 +25,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/market', MarketIndex::class)->name('market');
     Route::get('/inventory', Inventory::class)->name('inventory');
     Route::get('/my-sales', MySales::class)->name('my-sales');
-    Route::get('/item/{id}', ItemDetail::class)->name('item-detail');
+    Route::get('/item/{id}', ItemDetail::class)->name('item.show');
+    
+    Route::get('/profile/{id}', Profile::class)->name('profile.show');
+
 });
 
 require __DIR__ . '/auth.php';

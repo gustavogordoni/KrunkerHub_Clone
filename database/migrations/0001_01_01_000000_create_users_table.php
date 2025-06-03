@@ -20,21 +20,20 @@ return new class extends Migration
             $table->unsignedBigInteger('kr')->default(0);
             $table->string('clan')->nullable();
 
-            // $table->float('junk');
-            // $table->bigInteger('score');
-            // $table->bigInteger('kills');
-            // $table->bigInteger('deaths');
-            // $table->bigInteger('games');
-            // $table->bigInteger('wins');
-            // $table->bigInteger('losses');
-            // $table->bigInteger('assists');
-            // $table->bigInteger('melee');
-            // $table->bigInteger('headshots');
-            // $table->bigInteger('wallbangs');
-            // $table->bigInteger('shots');
-            // $table->bigInteger('hits');
-            // $table->bigInteger('misses');
-            // $table->time('time_played');
+            $table->float('junk')->nullable();
+            $table->bigInteger('score')->nullable();
+            $table->bigInteger('kills')->nullable();
+            $table->bigInteger('deaths')->nullable();
+            $table->bigInteger('games')->nullable();
+            $table->bigInteger('wins')->nullable();
+            $table->bigInteger('assists')->nullable();
+            $table->bigInteger('melee')->nullable();
+            $table->bigInteger('headshots')->nullable();
+            $table->bigInteger('wallbangs')->nullable();
+            $table->bigInteger('shots')->nullable();
+            $table->bigInteger('hits')->nullable();
+            $table->bigInteger('misses')->nullable();
+            $table->time('time_played')->nullable();
 
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');

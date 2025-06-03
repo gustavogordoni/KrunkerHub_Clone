@@ -34,7 +34,7 @@
                     <strong class="text-lg">{{ number_format($item->market_avg_price) }} KR</strong>
                 </p>
                 <div class="block w-full text-center">
-                    <a href="{{ route('item-detail', $item->id) }}" class="p-1 m-1 rounded">Info</a>
+                    <a href="{{ route('item.show', $item->id) }}" class="p-1 m-1 rounded">Info</a>
                 </div>
             </div>
         @endforeach

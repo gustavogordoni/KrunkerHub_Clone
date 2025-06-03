@@ -31,7 +31,7 @@ class ItemDetail extends Component
         $this->minPrice = $salesQuery->min('price') ?? 0;
         $this->maxPrice = $salesQuery->max('price') ?? 0;
         $this->unitsSold = $salesQuery->count();
-        $this->owners = Sale::where('item_id', $this->item->id)->distinct('user_id')->count('user_id');
+        $this->owners = Sale::where('item_id', $this->item->id)->distinct('user_id')->count('user_id') ?? 0;
     }
 
     public function render()
