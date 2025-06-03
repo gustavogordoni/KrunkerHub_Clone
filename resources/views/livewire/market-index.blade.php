@@ -153,7 +153,7 @@
                         <a href="" class="p-1 m-1 rounded">Purchase</a>
                         <a href="" class="p-1 m-1 rounded">Search</a>
                         <a href="" class="p-1 m-1 rounded">Share</a>
-                        <a href="" class="p-1 m-1 rounded">Info</a>
+                        <a href="{{ route('item-detail', $sale->item->id) }}" class="p-1 m-1 rounded">Info</a>
                     </div>
                 </div>
             @endforeach
