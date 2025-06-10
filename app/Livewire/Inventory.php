@@ -10,6 +10,9 @@ use Illuminate\Support\Facades\Auth;
 class Inventory extends Component
 {
     public $items;
+    public $selectedItem;
+    public $selectedPrice;
+
 
     public function mount()
     {
@@ -51,9 +54,35 @@ class Inventory extends Component
             'user_id' => Auth::id(),
             'price' => $price,
         ]);
-        
+
         Auth::user()->items()->detach($id);
 
+        $this->mount();
+    }
+
+    public function selectItem($itemId)
+    {
+        $this->selectedItem = Item::findOrFail($itemId);
+        $this->selectedPrice = '';
+    }
+
+    public function listSelectedItem()
+    {
+        $this->validate([
+            'selectedItem' => 'required',
+            'selectedPrice' => 'required|numeric|min:1',
+        ]);
+
+        Sale::create([
+            'item_id' => $this->selectedItem['id'],
+            'user_id' => Auth::id(),
+            'price' => $this->selectedPrice,
+        ]);
+
+        Auth::user()->items()->detach($this->selectedItem['id']);
+
+        $this->reset(['selectedItem', 'selectedPrice']);
+        $this->dispatch('close-modal', 'confirm-user-deletion');
         $this->mount();
     }
 }

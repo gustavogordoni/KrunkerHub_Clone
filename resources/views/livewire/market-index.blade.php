@@ -151,7 +151,7 @@
                     </p>
                     <div class="block w-full text-center">
                         <a href="" class="p-1 m-1 rounded">Purchase</a>
-                        <a href="" class="p-1 m-1 rounded">Search</a>
+                        <a href="{{ route('market', $sale->item->name) }}" class="p-1 m-1 rounded">Search</a>
                         <a href="" class="p-1 m-1 rounded">Share</a>
                         <a href="{{ route('item.show', $sale->item->id) }}" class="p-1 m-1 rounded">Info</a>
                     </div>

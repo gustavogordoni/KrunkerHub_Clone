@@ -34,7 +34,11 @@
                     <strong class="text-lg">{{ number_format($item->market_avg_price) }} KR</strong>
                 </p>
                 <div class="block w-full text-center">
-                    <a href="#" wire:click="listItem({{ $item->id }}, 100)" class="p-1 m-1 rounded">List</a>
+                    <a href="#" wire:click="selectItem({{ $item->id }})"
+                        x-on:click.prevent="$dispatch('open-modal', 'confirm-user-deletion')" class="p-1 m-1 rounded">
+                        List
+                    </a>
+
                     <a href="{{ route('item.show', $item->id) }}" class="p-1 m-1 rounded">Info</a>
                 </div>
             </div>
@@ -44,5 +48,40 @@
                 <p class="text-sm text-gray-400 mt-1">Adquira itens no mercado para que apareçam aqui.</p>
             </div>
         @endforelse
+
+        <x-modal name="confirm-user-deletion" :show="$selectedItem !== null" focusable x-data
+            x-on:close-modal.window="$dispatch('close')">
+            <div class="p-6">
+                @if ($selectedItem)
+                    <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">
+                        Listar item para venda
+                    </h2>
+                    <p class="mt-2 text-sm text-gray-600 dark:text-gray-400">
+                        <strong>Nome:</strong> {{ $selectedItem['name'] }} <br>
+                        <strong>Categoria:</strong> {{ $selectedItem['category'] }} <br>
+                        <strong>Raridade:</strong> {{ $selectedItem['rarity'] }}
+                    </p>
+
+                    <div class="mt-4">
+                        <x-input-label for="price" value="Preço (KR)" />
+                        <x-text-input id="price" wire:model.defer="selectedPrice" type="number"
+                            class="mt-1 block w-full" />
+                        <x-input-error :messages="$errors->get('selectedPrice')" class="mt-2" />
+
+                    </div>
+
+                    <div class="mt-6 flex justify-end">
+                        <x-secondary-button x-on:click="$dispatch('close')">
+                            Cancelar
+                        </x-secondary-button>
+
+                        <x-danger-button class="ml-3" wire:click="listSelectedItem">
+                            Listar
+                        </x-danger-button>
+                    </div>
+                @endif
+            </div>
+        </x-modal>
+
     </div>
 </div>
