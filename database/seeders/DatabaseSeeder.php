@@ -16,8 +16,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
-        
         Item::factory(100)->create();
         
         $user = User::factory()->create([
@@ -25,29 +23,40 @@ class DatabaseSeeder extends Seeder
             'email' => 'test@email.com',
             'password' => Hash::make('password'),
         ]);
-        $itemIds = Item::inRandomOrder()->limit(rand(5, 50))->pluck('id');
-        $user->items()->attach($itemIds);
-
-        foreach ($itemIds->take(10) as $itemId) {
-        Sale::factory()->create([
-            'user_id' => $user->id,
-            'item_id' => $itemId,
-            'status' => fake()->randomElement(['on_sale', 'sold']),
-        ]);
-    }
         
-        User::factory(10)->create()->each(function ($user) {
-            $itemIds = Item::inRandomOrder()->limit(rand(5, 50))->pluck('id');
-            $user->items()->attach($itemIds);
+        $inventoryItemIds = Item::inRandomOrder()->limit(rand(5, 50))->pluck('id');
+        $user->items()->attach($inventoryItemIds);
+        
+        $saleItemIds = Item::whereNotIn('id', $inventoryItemIds)
+            ->inRandomOrder()
+            ->limit(rand(3, 15))
+            ->pluck('id');
 
-             foreach ($itemIds->take(5) as $itemId) {
+        foreach ($saleItemIds->take(10) as $itemId) {
             Sale::factory()->create([
                 'user_id' => $user->id,
                 'item_id' => $itemId,
+                'status' => fake()->randomElement(['on_sale', 'sold']),
             ]);
         }
-        });
         
+        User::factory(10)->create()->each(function ($user) {
+            $inventoryItemIds = Item::inRandomOrder()->limit(rand(5, 50))->pluck('id');
+            $user->items()->attach($inventoryItemIds);
+
+            $saleItemIds = Item::whereNotIn('id', $inventoryItemIds)
+                ->inRandomOrder()
+                ->limit(5)
+                ->pluck('id');
+
+            foreach ($saleItemIds as $itemId) {
+                Sale::factory()->create([
+                    'user_id' => $user->id,
+                    'item_id' => $itemId,
+                ]);
+            }
+        });
+
         Sale::factory(30)->create();
     }
 }
