@@ -25,19 +25,19 @@
                     default => '',
                 };
             @endphp
-            <div class="bg-gray-100 dark:bg-gray-800 rounded shadow p-2 border-4 {{ $borderColor }}">
+            <div wire:key="item-{{ $item->id }}"
+                class="bg-gray-100 dark:bg-gray-800 rounded shadow p-2 border-4 {{ $borderColor }}">
                 <h2 class="text-xl text-center {{ $classColor }}"><strong>{{ $item->name }}</strong></h2>
                 <h3 class="text text-gray-600 text-center dark:text-gray-300">{{ $item->category }}</h3>
-                <img src="{{ $item->image_path }}" alt="{{ $item->name }}"
-                    class="w-full h-48 object-contain mb-2">
+                <img src="{{ $item->image_path }}" alt="{{ $item->name }}" class="w-full h-48 object-contain mb-2">
                 <p class="text-gray-600 dark:text-gray-300 text-center">
                     <strong class="text-lg">{{ number_format($item->market_avg_price) }} KR</strong>
                 </p>
                 <div class="block w-full text-center">
-                    <a href="#" wire:click="selectItem({{ $item->id }})"
-                        x-on:click.prevent="$dispatch('open-modal', 'confirm-user-deletion')" class="p-1 m-1 rounded">
-                        List
-                    </a>
+                    <button wire:click="selectItem({{ $item->id }})"
+                        x-on:click.prevent="$dispatch('open-modal', 'confirm-user-deletion')" type="button"
+                        class="p-1 m-1 rounded">List</button>
+
 
                     <a href="{{ route('item.show', $item->id) }}" class="p-1 m-1 rounded">Info</a>
                 </div>

@@ -26,7 +26,8 @@ class MySales extends Component
                 ];
 
                 return [$rarityOrder[$item->item->rarity], $item->price];
-            });
+            })
+            ->values();
     }
 
     public function render()

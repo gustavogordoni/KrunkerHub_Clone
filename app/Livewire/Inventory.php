@@ -33,7 +33,8 @@ class Inventory extends Component
             ];
 
             return [$rarityOrder[$item->rarity], -$item->market_avg_price];
-        });
+        })->values();
+
     }
 
     public function render()
