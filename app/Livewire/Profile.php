@@ -10,9 +10,13 @@ class Profile extends Component
 {
     public $user;
 
-    public function mount($id)
-    {
-        $this->user = User::findOrFail($id);
+    public function mount($nick)
+    {        
+        if (!is_string($nick) || strlen($nick) > 50) {
+            abort(404, 'Perfil não encontrado.');
+        }
+
+        $this->user = User::where('name', $nick)->firstOrFail();
     }
 
     public function render()

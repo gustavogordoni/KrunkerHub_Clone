@@ -20,6 +20,10 @@ class ItemDetail extends Component
 
     public function mount($id)
     {
+        if (!is_numeric($id)) {
+            abort(404, 'Item não encontrado.');
+        }
+        
         $this->item = Item::findOrFail($id);
 
         $this->author = User::find($this->item->author);

@@ -27,7 +27,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/my-sales', MySales::class)->name('my-sales');
     Route::get('/item/{id}', ItemDetail::class)->name('item.show');
     
-    Route::get('/profile/{id}', Profile::class)->name('profile.show');
+    Route::get('/profile/{nick}', Profile::class)->name('profile.show');
 
 });
 
