@@ -25,7 +25,7 @@
         @endphp
 
         <div class="w-full md:w-1/4 bg-gray-800 rounded p-4 text-center border-4 {{ $borderColor }} my-auto">
-            <img src="https://assets.krunker.io/textures/previews/weapons/weapon_2_6.png" alt="{{ $item->name }}"
+            <img src="{{ $item->image_path }}" alt="{{ $item->name }}"
                 class="w-40 h-40 mx-auto">
         </div>
 
