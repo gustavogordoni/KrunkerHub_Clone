@@ -69,7 +69,7 @@ php artisan key:generate
 ### Rode as migrations com as seeds
 
 ```sh
-php artisan migrate --seed
+php artisan migrate:fresh --seed
 ```
 
 <!-- 
