@@ -33,7 +33,7 @@
             <div class="bg-gray-800 p-4 rounded">
                 <h1 class="text-3xl font-bold mt-2 {{ $classColor }}">{{ $item->name }}</h1>
                 @if ($author)
-                    <p>by <a href="#" class="text-sm text-blue-400">{{ $author->name }}</a></p>
+                    <p>by <a href="{{ route('profile.show', $author->name) }}" class="text-sm text-blue-400">{{ $author->name }}</a></p>
                 @endif
                 <p class="text-sm">{{ ucfirst($item->category) }}</p>
                 <p class="text-sm">Season {{ $item->season }}</p>

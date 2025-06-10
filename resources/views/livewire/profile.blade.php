@@ -13,7 +13,7 @@
     </div>
 
     <div class="mt-6 bg-gray-800 p-4 rounded">
-        <h3 class="text-lg font-semibold mb-2">General Stats</h3>
+        <h3 class="text-lg text-center font-semibold mb-2">General Stats</h3>
         <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center text-sm">
             <x-stat label="Level" :value="$user->level" />
             <x-stat label="KR" :value="$user->kr" />
@@ -34,7 +34,7 @@
     </div>
 
     <div class="mt-6 bg-gray-800 p-4 rounded">
-        <h3 class="text-lg font-semibold mb-2">Accuracy Stats</h3>
+        <h3 class="text-lg text-center font-semibold mb-2">Accuracy Stats</h3>
         <div class="grid grid-cols-2 md:grid-cols-6 gap-4 text-center text-sm">
             <x-stat label="Shots" :value="$user->shots" />
             <x-stat label="Hits" :value="$user->hits" />
