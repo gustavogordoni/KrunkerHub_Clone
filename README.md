@@ -39,6 +39,10 @@ Além de servir como um projeto de aprendizado, esse sistema também busca demon
     <br />
     <h3 align="center">Search Modal</h3>
     <div align="center"><img src="public/images/search.png" /></div>    
+    <br />
+    <h3 align="center">Profile</h3>
+    <div align="center"><img src="public/images/profile.png" /></div>
+    
 </details>
 
 ---
