@@ -27,4 +27,21 @@ class Inventory extends Component
 
         return view('livewire.inventory', ['itemsTotal' => $itemsTotal]);
     }
+
+    public function listItem($id, $price){        
+        
+        if (!is_numeric($id) && !is_numeric($price)) {
+            abort(404, 'Item não encontrado.');
+        }
+
+        Sale::create([
+            'item_id' => $id,
+            'user_id' => Auth::id(),
+            'price' => $price,
+        ]);
+        
+        Auth::user()->items()->detach($id);
+
+        $this->mount();
+    }
 }

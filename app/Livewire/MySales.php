@@ -21,4 +21,19 @@ class MySales extends Component
     {
         return view('livewire.my-sales');
     }
+
+    public function unlistItem($id)
+    {
+        if (!is_numeric($id)) {
+            abort(404, 'Item não encontrado.');
+        }
+
+        Sale::where('item_id', $id)
+            ->where('user_id', Auth::id())
+            ->delete();
+
+        Auth::user()->items()->attach($id);
+
+        $this->mount();
+    }
 }

@@ -35,6 +35,7 @@
                     <strong class="text-lg">{{ number_format($sale->price) }} KR</strong>
                 </p>
                 <div class="block w-full text-center">
+                    <a href="#" wire:click="unlistItem({{ $item->id }})" class="p-1 m-1 rounded">Unlist</a>
                     <a href="{{ route('item.show', $item->id) }}" class="p-1 m-1 rounded">Info</a>
                 </div>
             </div>
