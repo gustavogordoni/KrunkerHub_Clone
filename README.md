@@ -1,6 +1,6 @@
 # Krunker Hub (Clone)
 
-Este projeto é um **clone funcional de um marketplace de skins do jogo Krunker**, desenvolvido com o objetivo de **praticar e aprofundar meus conhecimentos** em **Laravel**, **Livewire** e **Tailwind CSS**.
+Este projeto é um **clone funcional de um marketplace de skins do jogo Krunker**, denominado [Krunker Hub](https://krunker.io/social.html), desenvolvido com o objetivo de **praticar e aprofundar meus conhecimentos** em **Laravel**, **Livewire** e **Tailwind CSS**.
 
 A proposta é simular a plataforma onde jogadores podem visualizar, listar e negociar skins, replicando funcionalidades essenciais de um ambiente de compra e venda — como **sistema de inventário**, **listagem de itens no mercado**, **gestão de vendas**, **troca de skins**, **visualização de informações de perfil**, etc.
 
