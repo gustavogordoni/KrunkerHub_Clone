@@ -144,7 +144,7 @@
                     <h2 class="text-xl text-center {{ $classColor }}"><strong>{{ $sale->item->name }}</strong>
                     </h2>
                     <h3 class="text text-gray-600 text-center dark:text-gray-300">{{ $sale->item->category }}</h3>
-                    <img src="https://assets.krunker.io/textures/previews/weapons/weapon_2_6.png"
+                    <img src="{{ $sale->item->image_path }}"
                         alt="{{ $sale->item->name }}" class="w-full h-48 object-contain mb-2">
                     <p class="text-gray-600 dark:text-gray-300 text-center">
                         <strong class="text-lg">{{ number_format($sale->price) }} KR</strong>

@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Facades\Http;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Item>
@@ -16,6 +17,8 @@ class ItemFactory extends Factory
      */
     public function definition(): array
     {
+        $imagePath = $this->getValidImageUrl();
+
         return [
             'name' => fake()->words(2, true),
             'rarity' => fake()->randomElement([
@@ -70,9 +73,31 @@ class ItemFactory extends Factory
                 'Head',
                 'Playercards'
             ]),
-            'tag' => fake()->optional()->randomElement(['Vaulted', 'Twitch', 'Raid', '???']),            
+            'tag' => fake()->optional()->randomElement(['Vaulted', 'Twitch', 'Raid', '???']),
             'author' => fake()->numberBetween(1, 10),
-            'image_path' => null,
+            'image_path' => $imagePath,
         ];
+    }
+
+    private function getValidImageUrl(): ?string
+    {
+        $maxTries = 10;
+
+        for ($i = 0; $i < $maxTries; $i++) {
+            $class = rand(1, 20);
+            $skin = rand(1, 100);
+            $url = "https://assets.krunker.io/textures/previews/weapons/weapon_{$class}_{$skin}.png";
+
+            try {
+                $response = Http::head($url);
+                if ($response->successful()) {
+                    return $url;
+                }
+            } catch (\Exception $e) {                
+                continue;
+            }
+        }
+
+        return null;
     }
 }

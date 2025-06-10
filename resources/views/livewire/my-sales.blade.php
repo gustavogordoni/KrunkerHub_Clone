@@ -29,7 +29,7 @@
             <div class="bg-gray-100 dark:bg-gray-800 rounded shadow p-2 border-4 {{ $borderColor }}">
                 <h2 class="text-xl text-center {{ $classColor }}"><strong>{{ $item->name }}</strong></h2>
                 <h3 class="text text-gray-600 text-center dark:text-gray-300">{{ $item->category }}</h3>
-                <img src="https://assets.krunker.io/textures/previews/weapons/weapon_2_6.png" alt="{{ $item->name }}"
+                <img src="{{ $sale->item->image_path }}" alt="{{ $item->name }}"
                     class="w-full h-48 object-contain mb-2">
                 <p class="text-gray-600 dark:text-gray-300 text-center">
                     <strong class="text-lg">{{ number_format($sale->price) }} KR</strong>
