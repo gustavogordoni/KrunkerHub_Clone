@@ -10,13 +10,36 @@ Além de servir como um projeto de aprendizado, esse sistema também busca demon
 
 ## Tecnologias Utilizadas
 
-* **Laravel 12**
-* **Livewire**
-* **Tailwind CSS**
-* **Docker & Docker Compose**
-* **Nginx**
-* **PHP 8.4**
-* **PostgreSQL**
+-   **Laravel 12**
+-   **Livewire**
+-   **Tailwind CSS**
+-   **Docker & Docker Compose**
+-   **Nginx**
+-   **PHP 8.4**
+-   **PostgreSQL**
+
+---
+
+## Principais telas
+
+<details>
+<summary>Screenshots</summary>
+<br />
+    <h3 align="center">Market</h3>
+    <div align="center"><img src="public/images/market.png" /></div>
+    <br />
+    <h3 align="center">Inventory</h3>
+    <div align="center"><img src="public/images/inventory.png" /></div>    
+    <br />
+    <h3 align="center">My Sales</h3>
+    <div align="center"><img src="public/images/my-sales.png" /></div>    
+    <br />
+    <h3 align="center">Item Details</h3>
+    <div align="center"><img src="public/images/item-detail.png" /></div>
+    <br />
+    <h3 align="center">Search Modal</h3>
+    <div align="center"><img src="public/images/search.png" /></div>    
+</details>
 
 ---
 
@@ -72,10 +95,10 @@ php artisan key:generate
 php artisan migrate:fresh --seed
 ```
 
-<!-- 
+<!--
 ### Rode as seeds
 ```sh
-php artisan db:seed 
+php artisan db:seed
 ```
 -->
 
