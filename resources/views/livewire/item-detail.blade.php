@@ -31,10 +31,21 @@
 
         <div class="w-full md:w-3/4 space-y-4">
             <div class="bg-gray-800 p-4 rounded">
-                <h1 class="text-3xl font-bold mt-2 {{ $classColor }}">{{ $item->name }}</h1>
-                @if ($author)
-                    <p>by <a href="{{ route('profile.show', $author->name) }}" class="text-sm text-blue-400">{{ $author->name }}</a></p>
-                @endif
+                <div class="flex justify-between">
+                    <div>
+                        <h1 class="text-3xl font-bold mt-2 {{ $classColor }}">{{ $item->name }}</h1>
+                        @if ($author)
+                            <p>by <a href="{{ route('profile.show', $author->name) }}"
+                                    class="text-sm text-blue-400">{{ $author->name }}</a></p>
+                        @endif
+                    </div>
+                    <div class="my-auto">
+                        <a href="{{ route('market', $item->name) }}"
+                            class="bg-green-500 text-white px-4 border py-3 rounded text-sm inline-block"><strong>
+                                Find</strong>
+                        </a>
+                    </div>
+                </div>
                 <p class="text-sm">{{ ucfirst($item->category) }}</p>
                 <p class="text-sm">Season {{ $item->season }}</p>
                 <p class="text-xs italic">{{ $item->rarity }} - {{ $item->tag }}</p>

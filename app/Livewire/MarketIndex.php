@@ -118,6 +118,13 @@ class MarketIndex extends Component
         $this->activeTab = $tab;
     }
 
+    public function mount()
+    {
+        if (request()->has('search')) {
+            $this->search = request()->query('search');
+        }
+    }
+
     public function render()
     {
         return view('livewire.market-index', [

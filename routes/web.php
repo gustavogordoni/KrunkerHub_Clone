@@ -22,7 +22,7 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    Route::get('/market', MarketIndex::class)->name('market');
+    Route::get('/market/{search?}', MarketIndex::class)->name('market');
     Route::get('/inventory', Inventory::class)->name('inventory');
     Route::get('/my-sales', MySales::class)->name('my-sales');
     Route::get('/item/{id}', ItemDetail::class)->name('item.show');
