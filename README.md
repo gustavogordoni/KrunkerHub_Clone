@@ -1,25 +1,39 @@
-# Setup Docker Laravel
+# Krunker Hub (Clone)
+
+Este projeto é um **clone funcional de um marketplace de skins do jogo Krunker**, desenvolvido com o objetivo de **praticar e aprofundar meus conhecimentos** em **Laravel**, **Livewire** e **Tailwind CSS**.
+
+A proposta é simular a plataforma onde jogadores podem visualizar, listar e negociar skins, replicando funcionalidades essenciais de um ambiente de compra e venda — como **sistema de inventário**, **listagem de itens no mercado**, **gestão de vendas**, **troca de skins**, **visualização de informações de perfil**, etc.
+
+Além de servir como um projeto de aprendizado, esse sistema também busca demonstrar boas práticas de arquitetura com Laravel, uso eficiente de componentes com Livewire e estilização flexível com Tailwind, tudo orquestrado em um ambiente **"Dockerizado" com Nginx, PHP 8.4 e PostgreSQL** para facilitar o gerenciamento.
+
+---
+
+## Tecnologias Utilizadas
+
+* **Laravel 12**
+* **Livewire**
+* **Tailwind CSS**
+* **Docker & Docker Compose**
+* **Nginx**
+* **PHP 8.4**
+* **PostgreSQL**
+
+---
+
+## Instalação
 
 ### Passo a passo
 
-### Clone Repositório
+### Clone o Repositório
 
 ```sh
-git clone -b laravel-12-with-php8.4 https://github.com/gustavogordoni/setup-docker-laravel.git
+git clone https://github.com/gustavogordoni/KrunkerHub_Clone
 ```
 
-### Clone os Arquivos do Laravel
-```sh
-git clone https://github.com/laravel/laravel.git app_laravel
-```
-
-### Copie os arquivos docker-compose.yml, Dockerfile e o diretório docker/ para o seu projeto
-```sh
-cp -rf setup-docker-laravel/* app_laravel/
-```
+### Acesse o diretório
 
 ```sh
-cd app_laravel
+cd KrunkerHub_Clone
 ```
 
 ### Crie o Arquivo .env
@@ -52,10 +66,10 @@ composer install
 php artisan key:generate
 ```
 
-### Rode as migrations
+### Rode as migrations com as seeds
 
 ```sh
-php artisan migrate
+php artisan migrate --seed
 ```
 
 <!-- 
@@ -83,4 +97,4 @@ npm run build
 
 ## Acesse o projeto
 
-Abra no navegador: [http://localhost:8000](http://localhost:8000)
+Abra no navegador: [http://localhost:1000](http://localhost:1000)
