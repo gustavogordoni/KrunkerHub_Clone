@@ -14,7 +14,19 @@ class MySales extends Component
     {
         $this->sales = Sale::with('item')
             ->where('user_id', Auth::id())
-            ->get();
+            ->get()->sortBy(function ($item) {
+                $rarityOrder = [
+                    'Unobtainable' => 1,
+                    'Contraband' => 2,
+                    'Relic' => 3,
+                    'Legendary' => 4,
+                    'Epic' => 5,
+                    'Rare' => 6,
+                    'Uncommon' => 7,
+                ];
+
+                return [$rarityOrder[$item->item->rarity], $item->price];
+            });
     }
 
     public function render()
