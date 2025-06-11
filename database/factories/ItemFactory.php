@@ -32,48 +32,48 @@ class ItemFactory extends Factory
             ]),
             'season' => fake()->numberBetween(1, 8),
             'category' => fake()->randomElement([
-                'Sniper Rifle',
-                'Assault Rifle',
-                'Pistol',
-                'Submachine Gun',
-                'Revolver',
-                'Shotgun',
-                'Machine Gun',
-                'Semi Auto',
-                'Rocket Launcher',
-                'Akimbo Uzi',
-                'Desert Eagle',
-                'Alien Blaster',
-                'Crossbow',
-                'Famas',
-                'Sawed OFF',
-                'Auto Pistol',
-                'Blaster',
-                'Grappler',
-                'Tehchy',
-                'Noob Tube',
-                'Zapper',
-                'Akimbo Pistol',
-                'Charge Rifle',
-                'Compressor',
-                'Hats',
-                'Body',
-                'Melee',
-                'Sprays',
-                'Dyes',
-                'Waist',
-                'Faces',
-                'Shoes',
-                'Pets',
-                'Collectibles',
-                'Wrist',
-                'Charms',
-                'Tickets',
-                'Back',
-                'Head',
+                'Sniper Rifle', // 1
+                'Assault Rifle', // 2
+                'Pistol', // 
+                'Submachine Gun', // 4
+                'Revolver', // 5
+                'Shotgun', // 6
+                'Machine Gun', // 7
+                'Semi Auto', // 8
+                'Rocket Launcher', // 9
+                'Akimbo Uzi', // 10
+                'Desert Eagle', // 11
+                'Alien Blaster', // 12
+                'Crossbow', // 14
+                'Famas', // 15
+                'Sawed OFF', // 16
+                'Auto Pistol', // 17
+                'Blaster', // 19
+                'Grappler', // 
+                'Tehchy', // 22
+                'Noob Tube', // 23
+                'Zapper', // 25
+                'Akimbo Pistol', // 28
+                'Charge Rifle', // 19
+                'Compressor', 
+                'Hats', 
+                'Body', 
+                'Melee', 
+                'Sprays', 
+                'Dyes', 
+                'Waist', 
+                'Faces', 
+                'Shoes', 
+                'Pets', 
+                'Collectibles', 
+                'Wrist', 
+                'Charms', 
+                'Tickets', 
+                'Back', 
+                'Head', 
                 'Playercards'
             ]),
-            'tag' => fake()->optional()->randomElement(['Vaulted', 'Twitch', 'Raid', '???']),
+            'tag' => fake()->optional()->randomElement(['Vaulted', 'Twitch', 'Raid', '???', 'Kanji', 'Subzero', 'Christmas']),
             'author' => fake()->numberBetween(1, 10),
             'image_path' => $imagePath,
         ];
