@@ -25,18 +25,17 @@ class ItemController extends Controller
 
         $item = Item::findOrFail($id);
 
-        $salesQuery = Sale::where('item_id', $item->id)->where('status', 'sold');
+        $salesQuery = Sale::where('item_id', $item->id)->where('status', 'on_sale');
 
         $data = [
             'item' => $item,
             'author' => User::find($item->author),
             'average_price' => $salesQuery->avg('price') ?? 0,
             'min_price' => $salesQuery->min('price') ?? 0,
-            'max_price' => $salesQuery->max('price') ?? 0,
-            'units_sold' => $salesQuery->count(),
+            'max_price' => $salesQuery->max('price') ?? 0,            
             'owners' => Sale::where('item_id', $item->id)->distinct('user_id')->count('user_id') ?? 0,
         ];
 
-        return new ItemDetailResource($item);
+        return new ItemDetailResource($data);
     }
 }

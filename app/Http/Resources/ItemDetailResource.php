@@ -18,11 +18,9 @@ class ItemDetailResource extends JsonResource
 
         return [
             'item' => new ItemResource($this['item']),
-            'author' => new UserResource($this['author']),
-            'average_price' => $this->average_price,
+            'average_price' => $this['average_price'],
             'min_price' => $this['min_price'],
             'max_price' => $this['max_price'],
-            'units_sold' => $this['units_sold'],
             'owners' => $this['owners'],
         ];
     }

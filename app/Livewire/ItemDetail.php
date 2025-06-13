@@ -29,7 +29,7 @@ class ItemDetail extends Component
         $this->author = User::find($this->item->author);
 
         $salesQuery = Sale::where('item_id', $this->item->id)
-            ->where('status', 'sold');
+            ->where('status', 'on_sale');
 
         $this->averagePrice = $salesQuery->avg('price') ?? 0;
         $this->minPrice = $salesQuery->min('price') ?? 0;

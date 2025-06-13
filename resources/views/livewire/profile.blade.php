@@ -19,27 +19,21 @@
             <x-stat label="KR" :value="$user->kr" />
             <x-stat label="Junk" :value="number_format($user->junk ?? 0, 2)" />
             <x-stat label="Score" :value="number_format($user->score ?? 0)" />
-            <x-stat label="Games Played" :value="$user->games" />
             <x-stat label="Kills" :value="$user->kills" />
             <x-stat label="Deaths" :value="$user->deaths" />
+            <x-stat label="KDR" :value="number_format($user->kills / max($user->deaths, 1), 2)" />
+            <x-stat label="KPG" :value="number_format($user->kills / max($user->games, 1), 2)" />
+            <x-stat label="Games Played" :value="$user->games" />
             <x-stat label="Wins" :value="$user->wins" />
             <x-stat label="Losses" :value="$user->games - $user->wins" />
             <x-stat label="Assists" :value="$user->assists" />
+            <x-stat label="Melee Kills" :value="$user->melee" />
             <x-stat label="Headshots" :value="$user->headshots" />
             <x-stat label="Wallbangs" :value="$user->wallbangs" />
-            <x-stat label="Melee Kills" :value="$user->melee" />
-            <x-stat label="K/D Ratio" :value="number_format($user->kills / max($user->deaths, 1), 2)" />
-            <x-stat label="Win Rate" :value="number_format(($user->wins / $user->games) * 100, 2) . '%'" />
-        </div>
-    </div>
-
-    <div class="mt-6 bg-gray-800 p-4 rounded">
-        <h3 class="text-lg text-center font-semibold mb-2">Accuracy Stats</h3>
-        <div class="grid grid-cols-2 md:grid-cols-6 gap-4 text-center text-sm">
             <x-stat label="Shots" :value="$user->shots" />
             <x-stat label="Hits" :value="$user->hits" />
             <x-stat label="Misses" :value="$user->misses" />
-            <x-stat label="Accuracy" :value=" number_format(($user->hits / $user->shots) * 100, 2) . '%'" />                
+            <x-stat label="Accurancy" :value="$user->shots > 0 ? round(($user->hits / $user->shots) * 100, 2) . '%' : 0 . '%'" />                                  
             <x-stat label="Time Played" :value="$user->time_played" />
         </div>
     </div>
