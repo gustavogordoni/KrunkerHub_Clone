@@ -55,22 +55,22 @@ class ItemFactory extends Factory
                 'Zapper', // 25
                 'Akimbo Pistol', // 28
                 'Charge Rifle', // 19
-                'Compressor', 
-                'Hats', 
-                'Body', 
-                'Melee', 
-                'Sprays', 
-                'Dyes', 
-                'Waist', 
-                'Faces', 
-                'Shoes', 
-                'Pets', 
-                'Collectibles', 
-                'Wrist', 
-                'Charms', 
-                'Tickets', 
-                'Back', 
-                'Head', 
+                'Compressor',
+                'Hats',
+                'Body',
+                'Melee',
+                'Sprays',
+                'Dyes',
+                'Waist',
+                'Faces',
+                'Shoes',
+                'Pets',
+                'Collectibles',
+                'Wrist',
+                'Charms',
+                'Tickets',
+                'Back',
+                'Head',
                 'Playercards'
             ]),
             'tag' => fake()->optional()->randomElement(['Vaulted', 'Twitch', 'Raid', '???', 'Kanji', 'Subzero', 'Christmas']),
@@ -81,21 +81,33 @@ class ItemFactory extends Factory
 
     private function getValidImageUrl(): ?string
     {
-        $maxTries = 10;
+        $defaultUrl = 'https://assets.krunker.io/textures/previews/weapons/weapon_1_1.png';
 
-        for ($i = 0; $i < $maxTries; $i++) {
-            $class = rand(1, 20);
-            $skin = rand(1, 100);
-            $url = "https://assets.krunker.io/textures/previews/weapons/weapon_{$class}_{$skin}.png";
+        try {
+            $check = Http::head($defaultUrl);
 
-            try {
-                $response = Http::head($url);
-                if ($response->successful()) {
-                    return $url;
-                }
-            } catch (\Exception $e) {                
-                continue;
+            if (!$check->successful()) {
+                throw new \Exception("Não foi possível acessar a imagem padrão dos assets do Krunker.");
             }
+                        
+            $maxTries = 10;
+
+            for ($i = 0; $i < $maxTries; $i++) {
+                $class = rand(1, 20);
+                $skin = rand(1, 100);
+                $url = "https://assets.krunker.io/textures/previews/weapons/weapon_{$class}_{$skin}.png";
+
+                try {
+                    $response = Http::head($url);
+                    if ($response->successful()) {
+                        return $url;
+                    }
+                } catch (\Exception $e) {
+                    
+                }
+            }
+        } catch (\Exception $e) {
+            throw new \Exception("Erro ao tentar acessar os assets do Krunker: " . $e->getMessage());
         }
 
         return null;
