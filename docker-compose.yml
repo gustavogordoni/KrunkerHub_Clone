@@ -1,115 +1,74 @@
 services:
-    # image project
-    app:
-        container_name: app
+    laravel.test:
         build:
-            context: .
+            context: './vendor/laravel/sail/runtimes/8.4'
             dockerfile: Dockerfile
-        restart: unless-stopped
-        working_dir: /var/www/
-        volumes:
-            - ./:/var/www
-        depends_on:
-            - redis
-            - db
-        networks:
-            - laravel
-
-    # nginx
-    nginx:
-        container_name: nginx
-        image: nginx:alpine
-        restart: unless-stopped
+            args:
+                WWWGROUP: '${WWWGROUP}'
+        image: 'sail-8.4/app'
+        extra_hosts:
+            - 'host.docker.internal:host-gateway'
         ports:
-            - "1000:80"
-        volumes:
-            - ./:/var/www
-            - ./docker/nginx/:/etc/nginx/conf.d/
-        networks:
-            - laravel
-
-    # db mysql
-    # db:
-    #     container_name: mysql
-    #     image: mysql:8.0
-    #     platform: linux/x86_64
-    #     restart: unless-stopped
-    #     environment:
-    #         MYSQL_DATABASE: ${DB_DATABASE:-laravel}
-    #         MYSQL_ROOT_PASSWORD: ${DB_PASSWORD:-root}
-    #         MYSQL_PASSWORD: ${DB_PASSWORD:-userpass}
-    #         MYSQL_USER: ${DB_USERNAME:-username}
-    #     volumes:
-    #         - ./.docker/mysql/dbdata:/var/lib/mysql
-    #     ports:
-    #         - "3300:3306"
-    #     networks:
-    #         - laravel
-
-    # db postgres
-    db:
-        container_name: postgres
-        image: postgres:17
-        restart: unless-stopped
+            - '${APP_PORT:-80}:80'
+            - '${VITE_PORT:-5173}:${VITE_PORT:-5173}'
         environment:
-            POSTGRES_DB: ${DB_DATABASE:-laravel}
-            POSTGRES_USER: ${DB_USERNAME:-username}
-            POSTGRES_PASSWORD: ${DB_PASSWORD:-userpass}
+            WWWUSER: '${WWWUSER}'
+            LARAVEL_SAIL: 1
+            XDEBUG_MODE: '${SAIL_XDEBUG_MODE:-off}'
+            XDEBUG_CONFIG: '${SAIL_XDEBUG_CONFIG:-client_host=host.docker.internal}'
+            IGNITION_LOCAL_SITES_PATH: '${PWD}'
         volumes:
-            - ./.docker/postgres/dbdata:/var/lib/postgresql/data
+            - '.:/var/www/html'
+        networks:
+            - sail
+        depends_on:
+            - pgsql
+            - redis
+    pgsql:
+        image: 'postgres:17'
         ports:
-            - "5433:5432"
+            - '${FORWARD_DB_PORT:-5432}:5432'
+        environment:
+            PGPASSWORD: '${DB_PASSWORD:-secret}'
+            POSTGRES_DB: '${DB_DATABASE}'
+            POSTGRES_USER: '${DB_USERNAME}'
+            POSTGRES_PASSWORD: '${DB_PASSWORD:-secret}'
+        volumes:
+            - 'sail-pgsql:/var/lib/postgresql/data'
+            - './vendor/laravel/sail/database/pgsql/create-testing-database.sql:/docker-entrypoint-initdb.d/10-create-testing-database.sql'
         networks:
-            - laravel
-
-    # PHPMyAdmin
-    # phpmyadmin:c
-    #     container_name: phpmyadmin
-    #     image: phpmyadmin/phpmyadmin
-    #     platform: linux/x86_64
-    #     restart: unless-stopped
-    #     ports:
-    #         - "8080:80"
-    #     environment:
-    #         PMA_HOST: db
-    #         PMA_PORT: 3306
-    #         MYSQL_ROOT_PASSWORD: ${DB_PASSWORD:-root}
-    #     networks:
-    #         - laravel
-
-    # mailhog
-    # mailhog:
-    #     container_name: mailhog
-    #     image: mailhog/mailhog:latest
-    #     restart: always
-    #     ports:
-    #         - 1025:1025
-    #         - 8025:8025
-    #     networks:
-    #         - laravel
-
-    # ngrok
-    # ngrok:
-    #     container_name: ngrok
-    #     image: ngrok/ngrok:latest
-    #     restart: unless-stopped
-    #     command: ["start", "--config", "/etc/ngrok.yml", "--all"]
-    #     ports:
-    #         - 4040:4040
-    #     volumes:
-    #     - ./docker/ngrok/ngrok.yml:/etc/ngrok.yml:ro
-    #     depends_on:
-    #     - nginx
-    #     networks:
-    #     - laravel    
-
-    # redis
+            - sail
+        healthcheck:
+            test:
+                - CMD
+                - pg_isready
+                - '-q'
+                - '-d'
+                - '${DB_DATABASE}'
+                - '-U'
+                - '${DB_USERNAME}'
+            retries: 3
+            timeout: 5s
     redis:
-        container_name: redis
-        image: redis:latest
+        image: 'redis:alpine'
+        ports:
+            - '${FORWARD_REDIS_PORT:-6379}:6379'
+        volumes:
+            - 'sail-redis:/data'
         networks:
-            - laravel
-
+            - sail
+        healthcheck:
+            test:
+                - CMD
+                - redis-cli
+                - ping
+            retries: 3
+            timeout: 5s
 networks:
-    laravel:
+    sail:
         driver: bridge
+volumes:
+    sail-pgsql:
+        driver: local
+    sail-redis:
+        driver: local
