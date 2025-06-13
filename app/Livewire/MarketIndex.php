@@ -7,7 +7,9 @@ use App\Models\Sale;
 use Livewire\Component;
 use Livewire\WithPagination;
 
+use Illuminate\Support\Facades\DB;
 use function Laravel\Prompts\search;
+use Illuminate\Support\Facades\Auth;
 
 class MarketIndex extends Component
 {
@@ -116,6 +118,43 @@ class MarketIndex extends Component
     public function tabs($tab)
     {
         $this->activeTab = $tab;
+    }
+
+    public function buyItem($id)
+    {
+        if (!is_numeric($id)) {
+            abort(404, 'Item inválido.');
+        }
+
+        $sale = Sale::where('item_id', $id)
+            ->where('status', 'on_sale')
+            ->first();
+
+        if (!$sale) {
+            abort(404, 'Item não está à venda.');
+        }
+
+        $buyer = Auth::user();
+        $seller = $sale->user;
+        $price = $sale->price;        
+        
+        if ($buyer->kr < $price) {
+            abort(403, 'Saldo insuficiente para comprar este item.');
+        }
+        
+        DB::transaction(function () use ($buyer, $seller, $id, $price, $sale) {            
+            $seller->items()->detach($id);
+            $buyer->items()->attach($id);
+            
+            $buyer->decrement('kr', $price);
+            $seller->increment('kr', $price);
+
+            $sale->delete();
+        });
+
+        $this->dispatch('item-purchased');
+
+        $this->mount();
     }
 
     public function mount()
