@@ -178,6 +178,12 @@ class ImportSkins extends Command
             if ($this->urlExists($url)) return $url;
         }
 
+        // 2.2. Regra especial: Snipers com modelos customizados (midT e mid definidos)
+        if ($weapon === 1 && $mid !== null && $midT !== null) {
+            $url = "https://assets.krunker.io/textures/previews/weapons/weapon_1_m{$mid}_{$midT}.png";
+            if ($this->urlExists($url)) return $url;
+        }
+
         // 3. Skins com 'midT'
         if ($midT !== null && $weapon !== null && $id !== null) {
             $url = "https://assets.krunker.io/textures/previews/weapons/weapon_{$weapon}_m{$midT}_{$id}.png";
