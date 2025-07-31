@@ -73,7 +73,17 @@ class ItemFactory extends Factory
                 'Head',
                 'Playercards' /// playercards/card_x.webp (sem "previews/" antes)
             ]),
-            'tag' => fake()->optional()->randomElement(['Vaulted', 'Twitch', 'Raid', '???', 'Kanji', 'Subzero', 'Christmas']),
+            'tag' => fake()->optional()->randomElement([
+                'Vaulted',
+                'Twitch',
+                'Raid',
+                '???',
+                'Kanji',
+                'Subzero',
+                'Christmas',
+                'Ranked',
+                'Zombies'
+            ]),
             'author' => fake()->numberBetween(1, 10),
             'image_path' => $imagePath,
         ];
@@ -94,7 +104,7 @@ class ItemFactory extends Factory
             if (!$check->successful()) {
                 throw new \Exception("Não foi possível acessar a imagem padrão dos assets do Krunker.");
             }
-                        
+
             $maxTries = 10;
 
             for ($i = 0; $i < $maxTries; $i++) {
@@ -108,7 +118,6 @@ class ItemFactory extends Factory
                         return $url;
                     }
                 } catch (\Exception $e) {
-                    
                 }
             }
         } catch (\Exception $e) {
